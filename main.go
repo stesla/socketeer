@@ -63,7 +63,7 @@ func handleConnection(handler handlerFunc) http.Handler {
 			ws.WriteClose(4000)
 			return
 		}
-		conn, cerr := net.Dial("tcp", host + ":" + port)
+		conn, cerr := net.Dial("tcp", host+":"+port)
 		if cerr != nil {
 			ws.WriteClose(4001)
 			return
@@ -92,10 +92,10 @@ func linewise(down *websocket.Conn, up net.Conn) {
 		for {
 			var msg string
 			if rerr := websocket.Message.Receive(down, &msg); rerr != nil {
-				break;
+				break
 			}
 			if _, werr := up.Write([]byte(msg + lineEnding)); werr != nil {
-				break;
+				break
 			}
 		}
 		exit <- true
